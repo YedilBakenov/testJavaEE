@@ -9,18 +9,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import model.Item;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
-@WebServlet(value = "/main")
-public class MainServlet extends HttpServlet {
+@WebServlet(value = "/add-item")
+public class AddItemServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        ArrayList<Item> items = DBManager.getAllItems();
-
-        request.setAttribute("spisok", items);
-
-        request.getRequestDispatcher("/main.jsp").forward(request, response);
+        response.sendRedirect("/add-item.jsp");
     }
 
     @Override

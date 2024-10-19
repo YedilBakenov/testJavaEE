@@ -28,4 +28,21 @@ public class DBManager {
     public static ArrayList<Item> getAllItems(){
         return items;
     }
+
+    public static Item getItemById(int id) {
+        return items.stream().filter(s -> s.getId()==id).findFirst().orElseThrow();
+    }
+
+    public static void updateItem(Item item) {
+        Item itemFromBase = new Item();
+        itemFromBase.setId(item.getId());
+        itemFromBase.setModel(item.getModel());
+        itemFromBase.setPrice(item.getPrice());
+        itemFromBase.setDescription(item.getDescription());
+
+    }
+
+    public static void deleteItemById(int id) {
+        items.removeIf(s->s.getId()==id);
+    }
 }
