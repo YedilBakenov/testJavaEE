@@ -1,5 +1,6 @@
 package servlets;
 
+import db.DBConnector;
 import db.DBManager;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,12 +21,13 @@ public class UpdateItemServlet extends HttpServlet {
         double price = Double.parseDouble(request.getParameter("price"));
         int id = Integer.parseInt(request.getParameter("id"));
 
-        Item item = DBManager.getItemById(id);
+        Item item = DBConnector.getItemById(id);
+        item.setId(id);
         item.setDescription(description);
         item.setModel(model);
         item.setPrice(price);
 
-        DBManager.updateItem(item);
+        DBConnector.updateItem(item);
 
         response.sendRedirect("/main");
     }

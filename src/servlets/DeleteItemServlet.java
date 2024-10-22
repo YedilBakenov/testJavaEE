@@ -1,5 +1,6 @@
 package servlets;
 
+import db.DBConnector;
 import db.DBManager;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,7 +18,7 @@ public class DeleteItemServlet extends HttpServlet {
 
         int id = Integer.parseInt(request.getParameter("id"));
 
-        DBManager.deleteItemById(id);
+        DBConnector.deleteItemById(id);
 
         response.sendRedirect("/main");
     }

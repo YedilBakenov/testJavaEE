@@ -1,5 +1,6 @@
 package servlets;
 
+import db.DBConnector;
 import db.DBManager;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -30,7 +31,7 @@ public class AddItemServlet extends HttpServlet {
         item.setModel(model);
         item.setPrice(price);
 
-        DBManager.addItem(item);
+        DBConnector.addItem(item);
 
         response.sendRedirect("/main");
     }
