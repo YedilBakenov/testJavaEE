@@ -1,4 +1,6 @@
 <%@ page import="model.Item" %>
+<%@ page import="model.City" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -46,6 +48,25 @@
                 <div class="row mt-2">
                     <div class="col-12">
                         <input type="number" name="price" class="form-control" value="<%=item.getPrice()%>">
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <label>CITY:</label>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <select class="form-control" name="city_id">
+                            <%
+                                ArrayList<City> cities =(ArrayList<City>)request.getAttribute("goroda");
+                                for(City c: cities){
+                            %>
+                            <option value="<%=c.getId()%>"><%=c.getName()%></option>
+                            <%
+                                }
+                            %>
+                        </select>
                     </div>
                 </div>
                 <div class="row mt-2">

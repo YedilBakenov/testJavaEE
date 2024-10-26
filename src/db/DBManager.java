@@ -20,8 +20,7 @@ public class DBManager {
     }
 
     public static void addItem(Item item){
-        item.setId(id);
-        id++;
+        item.setId(++id);
         items.add(item);
     }
 

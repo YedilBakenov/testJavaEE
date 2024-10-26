@@ -8,6 +8,7 @@ public class Item {
     private String description;
 
     private double price;
+    private City city;
 
     public Item() {
     }
@@ -49,5 +50,13 @@ public class Item {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 }

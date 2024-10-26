@@ -1,7 +1,6 @@
 package servlets;
 
 import db.DBConnector;
-import db.DBManager;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,6 +16,7 @@ public class DetailsItemServlet extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
 
         request.setAttribute("obj", DBConnector.getItemById(id));
+        request.setAttribute("goroda", DBConnector.getAllCities());
 
         request.getRequestDispatcher("/item-details.jsp").forward(request, response);
     }

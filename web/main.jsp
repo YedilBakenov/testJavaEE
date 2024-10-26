@@ -1,5 +1,6 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="model.Item" %>
+<%@ page import="model.City" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -55,6 +56,26 @@
                                 <input type="number" name="price" class="form-control">
                             </div>
                         </div>
+                        <div class="row mt-2">
+                            <div class="col-12">
+                                <label>CITY:</label>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12">
+                                <select class="form-control" name="city_id">
+                                    <%
+                                        ArrayList<City> cities =(ArrayList<City>)request.getAttribute("goroda");
+                                        for(City c: cities){
+                                    %>
+                                        <option value="<%=c.getId()%>"><%=c.getName()%></option>
+                                    <%
+                                        }
+                                    %>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-success btn-sm">ADD ITEM</button>
@@ -74,6 +95,7 @@
             <th>MODEL</th>
             <th>DESCRIPTION</th>
             <th>PRICE</th>
+            <th>CITY</th>
             <th>DETAILS</th>
         </tr>
         </thead>
@@ -91,6 +113,7 @@
             </td>
             <td><%=it.getPrice()%>
             </td>
+            <td><%=it.getCity().getName()%>/<%=it.getCity().getCode()%></td>
             <td style="width: 8%"><a class="btn btn-sm btn-secondary" href="/item-details?id=<%=it.getId()%>">DETAILS</a></td>
         </tr>
         <%
