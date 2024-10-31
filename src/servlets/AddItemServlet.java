@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.City;
 import model.Item;
+import model.User;
 
 import java.io.IOException;
 
@@ -16,7 +17,11 @@ public class AddItemServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        response.sendRedirect("/add-item.jsp");
+        User user =(User) request.getSession().getAttribute("currentUser");
+
+        if(user!=null) {
+            request.getRequestDispatcher("/add-item.jsp").forward(request, response);
+        }else request.getRequestDispatcher("/login").forward(request, response);
     }
 
     @Override

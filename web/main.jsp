@@ -12,9 +12,15 @@
 
 <div class="container mt-3">
 
+    <% if(user!=null) {%>
+
     <button type="button" class="btn btn-success btn-sm mt-3 mb-3" data-bs-toggle="modal" data-bs-target="#addItem">
         + ADD ITEM
     </button>
+
+    <%
+        }
+    %>
 
     <div class="modal fade" id="addItem" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
          aria-labelledby="staticBackdropLabel" aria-hidden="true">

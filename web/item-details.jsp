@@ -69,12 +69,19 @@
                         </select>
                     </div>
                 </div>
+                <% if(user!=null){ %>
+
                 <div class="row mt-2">
                     <div class="col-12">
                         <button class="btn btn-success btn-sm">UPDATE ITEM</button>
                     </div>
                 </div>
+
+                <%}%>
             </form>
+
+            <% if(user!=null){ %>
+
             <form action="/delete-item" method="post">
                 <input type="hidden" name="id" value="<%=item.getId()%>">
                 <div class="row mt-2">
@@ -83,6 +90,8 @@
                     </div>
                 </div>
             </form>
+
+            <%}%>
         </div>
     </div>
 </div>

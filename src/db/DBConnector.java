@@ -2,6 +2,7 @@ package db;
 
 import model.City;
 import model.Item;
+import model.User;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -190,5 +191,30 @@ public class DBConnector {
         }
 
         return city;
+    }
+
+
+    public static User getUserByEmail(String email){
+        User user = new User();
+
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE email=?");
+            statement.setString(1, email);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if(resultSet.next()){
+                user.setId(resultSet.getInt("id"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPassword(resultSet.getString("password"));
+                user.setFullName(resultSet.getString("full_name"));
+            }
+
+            statement.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return user;
     }
 }

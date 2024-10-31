@@ -3,9 +3,7 @@ package model;
 public class City {
 
     private int id;
-
     private String name;
-
     private String code;
 
     public City() {
