@@ -2,6 +2,7 @@ package db;
 
 import model.City;
 import model.Item;
+import model.News;
 import model.User;
 
 import java.sql.Connection;
@@ -216,5 +217,156 @@ public class DBConnector {
             e.printStackTrace();
         }
         return user;
+    }
+
+    public static ArrayList<News> getAllNews() {
+
+        ArrayList<News> newsList = new ArrayList<>();
+
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * " +
+                    "FROM news n " +
+                    "INNER JOIN users u " +
+                    "ON n.user_id = u.id ORDER BY n.date DESC ");
+
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()){
+                News news = new News();
+                news.setId(resultSet.getInt("id"));
+                news.setContent(resultSet.getString("content"));
+                news.setTitle(resultSet.getString("title"));
+                news.setDate(resultSet.getTimestamp("date"));
+
+                User user = new User();
+                user.setId(resultSet.getInt("user_id"));
+                user.setEmail(resultSet.getString("email"));
+                user.setFullName(resultSet.getString("full_name"));
+
+                news.setUser(user);
+                newsList.add(news);
+            }
+
+            statement.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return newsList;
+    }
+
+    public static News getNewsById(int id) {
+        News news = new News();
+
+        try{
+
+            PreparedStatement statement = connection.prepareStatement("SELECT * " +
+                    "FROM news n " +
+                    "INNER JOIN users u " +
+                    "ON n.user_id = u.id " +
+                    "WHERE n.id=?");
+
+            statement.setInt(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if(resultSet.next()){
+                news.setId(resultSet.getInt("id"));
+                news.setDate(resultSet.getTimestamp("date"));
+                news.setTitle(resultSet.getString("title"));
+                news.setContent(resultSet.getString("content"));
+
+                User user = new User();
+                user.setFullName(resultSet.getString("full_name"));
+                user.setId(resultSet.getInt("user_id"));
+                user.setEmail(resultSet.getString("email"));
+
+                news.setUser(user);
+
+                statement.close();
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return news;
+    }
+
+    public static User getUserById(int userId) {
+
+        User user = new User();
+
+        try{
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE id=?");
+            statement.setInt(1, userId);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if(resultSet.next()){
+                user.setId(resultSet.getInt("id"));
+                user.setEmail(resultSet.getString("email"));
+                user.setFullName(resultSet.getString("full_name"));
+                statement.close();
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    public static void addNews(News news) {
+
+        try {
+
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO news (title, content, date, user_id) " +
+                    "VALUES (?, ?, NOW(), ?)");
+            statement.setString(1, news.getTitle());
+            statement.setString(2, news.getContent());
+            statement.setInt(3, news.getUser().getId());
+
+            statement.executeUpdate();
+            statement.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateNews(News news) {
+
+        try {
+
+            PreparedStatement statement = connection.prepareStatement("UPDATE news SET content=?, " +
+                    "title=?, date=NOW() WHERE id=?");
+            statement.setString(1, news.getContent());
+            statement.setString(2, news.getTitle());
+            statement.setInt(3, news.getId());
+
+            statement.executeUpdate();
+            statement.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void deleteNewsById(int id) {
+
+        try {
+
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM news WHERE id=?");
+            statement.setInt(1, id);
+
+            statement.executeUpdate();
+            statement.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 }
