@@ -12,7 +12,7 @@
 
 <div class="container mt-3">
 
-    <% if(user!=null) {%>
+    <% if(user!=null && user.getRole()==2) {%>
 
     <button type="button" class="btn btn-success btn-sm mt-3 mb-3" data-bs-toggle="modal" data-bs-target="#addItem">
         + ADD ITEM

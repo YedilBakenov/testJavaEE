@@ -17,6 +17,7 @@ public class DetailsNewsServlet extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
 
         request.setAttribute("news", DBConnector.getNewsById(id));
+        request.setAttribute("comments", DBConnector.getCommentsByNewsId(id));
 
         request.getRequestDispatcher("/news-details.jsp").forward(request, response);
     }

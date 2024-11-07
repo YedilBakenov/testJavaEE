@@ -13,7 +13,7 @@
                     <a class="nav-link active" aria-current="page" href="/">ALL ITEMS</a>
                 </li>
 
-                <% if (user != null) { %>
+                <% if (user != null && user.getRole()==2) { %>
 
                 <li class="nav-item">
                     <a class="nav-link" href="/add-item">ADD ITEM</a>

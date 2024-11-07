@@ -10,7 +10,7 @@
 <div class="container">
     <div class="row mt-3 justify-content-center">
         <div class="col-6">
-            <form method="post" action="/login">
+            <form method="post" action="/registration">
                 <div class="row mt-2">
                     <div class="col-12">
                         <label>EMAIL:</label>
@@ -18,7 +18,17 @@
                 </div>
                 <div class="row mt-2">
                     <div class="col-12">
-                        <input type="email" name="email" class="form-control">
+                        <input type="email" name="email" class="form-control" required>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <label>FULL NAME:</label>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <input type="text" name="full_name" class="form-control">
                     </div>
                 </div>
                 <div class="row mt-2">
@@ -31,21 +41,22 @@
                         <input type="password" name="password" class="form-control">
                     </div>
                 </div>
-
-                <div class="d-flex">
-                    <div class="row mt-2">
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-success btn-sm">SIGN IN</button>
-                        </div>
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <label>REPEAT PASSWORD:</label>
                     </div>
-
-                    <div class="row mt-2 ms-1">
-                        <div class="col-12">
-                            <a type="button" class="btn btn-primary btn-sm" href="/registration">SIGN UP</a>
-                        </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <input type="password" name="re_password" class="form-control">
                     </div>
                 </div>
 
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <button class="btn btn-success btn-sm">REGISTRATION</button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>

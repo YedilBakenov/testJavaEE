@@ -1,9 +1,6 @@
 package db;
 
-import model.City;
-import model.Item;
-import model.News;
-import model.User;
+import model.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -209,6 +206,7 @@ public class DBConnector {
                 user.setEmail(resultSet.getString("email"));
                 user.setPassword(resultSet.getString("password"));
                 user.setFullName(resultSet.getString("full_name"));
+                user.setRole(resultSet.getInt("role"));
             }
 
             statement.close();
@@ -216,7 +214,10 @@ public class DBConnector {
         }catch (Exception e){
             e.printStackTrace();
         }
-        return user;
+
+         if(user.getEmail()!=null){
+             return user;
+         }else return null;
     }
 
     public static ArrayList<News> getAllNews() {
@@ -368,5 +369,104 @@ public class DBConnector {
             e.printStackTrace();
         }
 
+    }
+
+    public static void addUser(User user) {
+
+        try {
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO users (email, full_name, password, role) " +
+                    "VALUES (?, ?, ?, ?)");
+            statement.setString(1, user.getEmail());
+            statement.setString(2, user.getFullName());
+            statement.setString(3, user.getPassword());
+            statement.setInt(4, user.getRole());
+
+            statement.executeUpdate();
+            statement.close();
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static ArrayList<Comment>getCommentsByNewsId(int newsId){
+        ArrayList<Comment>list = new ArrayList<>();
+
+        try {
+
+            PreparedStatement statement = connection.prepareStatement("SELECT * " +
+                    "FROM comments com " +
+                    "INNER JOIN news n " +
+                    "ON com.news_id = n.id " +
+                    "INNER JOIN users u " +
+                    "ON com.user_id = u.id " +
+                    "WHERE n.id=? ORDER BY com.created_date DESC");
+
+            statement.setInt(1, newsId);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()){
+                Comment comment = new Comment();
+                comment.setId(resultSet.getInt("id"));
+                comment.setDate(resultSet.getTimestamp("created_date"));
+                comment.setText(resultSet.getString("text"));
+
+                News news = new News();
+                news.setContent(resultSet.getString("content"));
+                news.setTitle(resultSet.getString("title"));
+                news.setDate(resultSet.getTimestamp("date"));
+                news.setId(resultSet.getInt("news_id"));
+
+                User user = new User();
+                user.setRole(resultSet.getInt("role"));
+                user.setId(resultSet.getInt("user_id"));
+                user.setEmail(resultSet.getString("email"));
+                user.setFullName(resultSet.getString("full_name"));
+
+                comment.setNews(news);
+                comment.setUser(user);
+
+                list.add(comment);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public static void addComment(Comment comment) {
+
+        try{
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO comments (text, created_date, news_id, user_id) " +
+                    "VALUES (?, NOW(), ?, ?)");
+            statement.setString(1, comment.getText());
+            statement.setInt(2, comment.getNews().getId());
+            statement.setInt(3, comment.getUser().getId());
+
+            statement.executeUpdate();
+            statement.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void deleteCommentById(int commentId) {
+
+        try {
+
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM comments WHERE id=?");
+            statement.setInt(1, commentId);
+
+            statement.executeUpdate();
+            statement.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
