@@ -11,8 +11,15 @@
 <%@include file="navbar.jsp" %>
 
 <div class="container mt-3">
+    <form action="/main" method="get">
+        <div class="d-flex mb-2">
+            <input type="text" name="word" class="form-control" style="width: 90%;">
+            <button class="btn btn-success btn-sm ms-2">SEARCH</button>
+        </div>
+    </form>
 
-    <% if(user!=null && user.getRole()==2) {%>
+
+    <% if (user != null && user.getRole() == 2) {%>
 
     <button type="button" class="btn btn-success btn-sm mt-3 mb-3" data-bs-toggle="modal" data-bs-target="#addItem">
         + ADD ITEM
@@ -71,10 +78,11 @@
                             <div class="col-12">
                                 <select class="form-control" name="city_id">
                                     <%
-                                        ArrayList<City> cities =(ArrayList<City>)request.getAttribute("goroda");
-                                        for(City c: cities){
+                                        ArrayList<City> cities = (ArrayList<City>) request.getAttribute("goroda");
+                                        for (City c : cities) {
                                     %>
-                                        <option value="<%=c.getId()%>"><%=c.getName()%></option>
+                                    <option value="<%=c.getId()%>"><%=c.getName()%>
+                                    </option>
                                     <%
                                         }
                                     %>
@@ -83,7 +91,8 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close
+                            </button>
                             <button type="submit" class="btn btn-success btn-sm">ADD ITEM</button>
                         </div>
                     </form>
@@ -119,8 +128,10 @@
             </td>
             <td><%=it.getPrice()%>
             </td>
-            <td><%=it.getCity().getName()%>/<%=it.getCity().getCode()%></td>
-            <td style="width: 8%"><a class="btn btn-sm btn-secondary" href="/item-details?id=<%=it.getId()%>">DETAILS</a></td>
+            <td><%=it.getCity().getName()%>/<%=it.getCity().getCode()%>
+            </td>
+            <td style="width: 8%"><a class="btn btn-sm btn-secondary"
+                                     href="/item-details?id=<%=it.getId()%>">DETAILS</a></td>
         </tr>
         <%
             }

@@ -19,11 +19,17 @@ public class MainServlet extends HttpServlet {
 
         ArrayList<Item> items = DBConnector.getAllItems();
 
-        request.setAttribute("goroda", DBConnector.getAllCities());
-        request.setAttribute("spisok", items);
+        String word = request.getParameter("word");
 
-        request.getRequestDispatcher("/main.jsp").forward(request, response);
+        if(word!=null){
+            request.setAttribute("spisok", DBConnector.getAllItemsBySearch("%"+ word + "%"));
+            request.setAttribute("goroda", DBConnector.getAllCities());
+            request.getRequestDispatcher("/main.jsp").forward(request, response);
+        }else {
+                request.setAttribute("goroda", DBConnector.getAllCities());
+                request.setAttribute("spisok", items);
+                request.getRequestDispatcher("/main.jsp").forward(request, response);
+            }
     }
-
 }
 

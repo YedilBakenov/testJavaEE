@@ -60,15 +60,15 @@ public class DBConnector {
         return items;
     }
 
-    public static ArrayList<City>getAllCities(){
+    public static ArrayList<City> getAllCities() {
         ArrayList<City> cities = new ArrayList<>();
 
-        try{
+        try {
 
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM cities");
             ResultSet resultSet = statement.executeQuery();
 
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 City city = new City();
                 city.setId(resultSet.getInt("id"));
                 city.setCode(resultSet.getString("code"));
@@ -78,7 +78,7 @@ public class DBConnector {
             }
             statement.close();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -149,7 +149,7 @@ public class DBConnector {
             statement.executeUpdate();
             statement.close();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -158,13 +158,13 @@ public class DBConnector {
     public static void deleteItemById(int id) {
 
         try {
-        PreparedStatement statement = connection.prepareStatement("DELETE FROM items WHERE id=?");
-        statement.setInt(1, id);
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM items WHERE id=?");
+            statement.setInt(1, id);
 
-        statement.executeUpdate();
-        statement.close();
+            statement.executeUpdate();
+            statement.close();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -172,19 +172,19 @@ public class DBConnector {
     public static City getCityById(int cityId) {
         City city = new City();
 
-        try{
+        try {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM cities WHERE id=?");
             statement.setInt(1, cityId);
 
             ResultSet resultSet = statement.executeQuery();
 
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 city.setId(resultSet.getInt("id"));
                 city.setCode(resultSet.getString("code"));
                 city.setName(resultSet.getString("name"));
                 statement.close();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -192,7 +192,7 @@ public class DBConnector {
     }
 
 
-    public static User getUserByEmail(String email){
+    public static User getUserByEmail(String email) {
         User user = new User();
 
         try {
@@ -201,7 +201,7 @@ public class DBConnector {
 
             ResultSet resultSet = statement.executeQuery();
 
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 user.setId(resultSet.getInt("id"));
                 user.setEmail(resultSet.getString("email"));
                 user.setPassword(resultSet.getString("password"));
@@ -211,13 +211,13 @@ public class DBConnector {
 
             statement.close();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-         if(user.getEmail()!=null){
-             return user;
-         }else return null;
+        if (user.getEmail() != null) {
+            return user;
+        } else return null;
     }
 
     public static ArrayList<News> getAllNews() {
@@ -233,7 +233,7 @@ public class DBConnector {
 
             ResultSet resultSet = statement.executeQuery();
 
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 News news = new News();
                 news.setId(resultSet.getInt("id"));
                 news.setContent(resultSet.getString("content"));
@@ -251,7 +251,7 @@ public class DBConnector {
 
             statement.close();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -261,7 +261,7 @@ public class DBConnector {
     public static News getNewsById(int id) {
         News news = new News();
 
-        try{
+        try {
 
             PreparedStatement statement = connection.prepareStatement("SELECT * " +
                     "FROM news n " +
@@ -273,7 +273,7 @@ public class DBConnector {
 
             ResultSet resultSet = statement.executeQuery();
 
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 news.setId(resultSet.getInt("id"));
                 news.setDate(resultSet.getTimestamp("date"));
                 news.setTitle(resultSet.getString("title"));
@@ -289,7 +289,7 @@ public class DBConnector {
                 statement.close();
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return news;
@@ -299,20 +299,20 @@ public class DBConnector {
 
         User user = new User();
 
-        try{
+        try {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE id=?");
             statement.setInt(1, userId);
 
             ResultSet resultSet = statement.executeQuery();
 
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 user.setId(resultSet.getInt("id"));
                 user.setEmail(resultSet.getString("email"));
                 user.setFullName(resultSet.getString("full_name"));
                 statement.close();
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return user;
@@ -331,7 +331,7 @@ public class DBConnector {
             statement.executeUpdate();
             statement.close();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -349,7 +349,7 @@ public class DBConnector {
             statement.executeUpdate();
             statement.close();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -365,7 +365,7 @@ public class DBConnector {
             statement.executeUpdate();
             statement.close();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -385,13 +385,13 @@ public class DBConnector {
             statement.close();
 
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static ArrayList<Comment>getCommentsByNewsId(int newsId){
-        ArrayList<Comment>list = new ArrayList<>();
+    public static ArrayList<Comment> getCommentsByNewsId(int newsId) {
+        ArrayList<Comment> list = new ArrayList<>();
 
         try {
 
@@ -407,7 +407,7 @@ public class DBConnector {
 
             ResultSet resultSet = statement.executeQuery();
 
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 Comment comment = new Comment();
                 comment.setId(resultSet.getInt("id"));
                 comment.setDate(resultSet.getTimestamp("created_date"));
@@ -431,7 +431,7 @@ public class DBConnector {
                 list.add(comment);
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return list;
@@ -439,7 +439,7 @@ public class DBConnector {
 
     public static void addComment(Comment comment) {
 
-        try{
+        try {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO comments (text, created_date, news_id, user_id) " +
                     "VALUES (?, NOW(), ?, ?)");
             statement.setString(1, comment.getText());
@@ -449,7 +449,7 @@ public class DBConnector {
             statement.executeUpdate();
             statement.close();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -465,8 +465,50 @@ public class DBConnector {
             statement.executeUpdate();
             statement.close();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static ArrayList<Item> getAllItemsBySearch(String word) {
+
+        ArrayList<Item> items = new ArrayList<>();
+
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * " +
+                    "FROM items it " +
+                    "INNER JOIN cities c ON it.city_id = c.id " +
+                    "WHERE LOWER(it.model) LIKE LOWER(?) OR LOWER(it.description) LIKE LOWER(?) " +
+                    "ORDER BY it.id DESC");
+
+            statement.setString(1, word);
+            statement.setString(2, word);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Item item = new Item();
+                item.setId(resultSet.getInt("id"));
+                item.setPrice(resultSet.getDouble("price"));
+                item.setDescription(resultSet.getString("description"));
+                item.setModel(resultSet.getString("model"));
+
+                City city = new City();
+                city.setId(resultSet.getInt("city_id"));
+                city.setName(resultSet.getString("name"));
+                city.setCode(resultSet.getString("code"));
+
+                item.setCity(city);
+
+                items.add(item);
+            }
+
+            resultSet.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return items;
     }
 }
